@@ -15,10 +15,10 @@ class Router
         return $this;
     }
 
-    public function dispatch($url)
+    public function dispatch($url , $method)
     {
         foreach ($this->routes as $route) {
-            if ($url === $route['url']) {
+            if ($url === $route['url']&& $method === $route['method']) {
                 $controllerName = $route['controller'];
                 $instance = new $controllerName();
                 $functionName = $route['function'] ;
