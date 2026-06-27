@@ -609,3 +609,173 @@ button:focus-visible {
   outline: 2px solid var(--signal);
   outline-offset: 2px;
 }
+/* ===================================================
+   Auth forms (register / login) — append to style.css
+   =================================================== */
+
+.auth-wrap {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 72px 0 64px;
+}
+
+.auth-card {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 32px 28px;
+}
+
+.auth-card h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.auth-card .auth-sub {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+}
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-dim);
+  margin-bottom: 7px;
+  letter-spacing: 0.02em;
+}
+
+.field input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  padding: 11px 12px;
+  border-radius: 7px;
+  transition: border-color 0.15s ease;
+}
+
+.field input::placeholder {
+  color: #4a525a;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--signal-dim);
+}
+
+.field.has-error input {
+  border-color: var(--alert-dim);
+}
+
+.field-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--alert);
+  margin-top: 7px;
+  font-family: var(--font-body);
+}
+
+.field-error svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.auth-card .btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 6px;
+  padding: 12px 20px;
+}
+
+.auth-foot {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 22px;
+}
+
+.auth-foot a {
+  color: var(--signal);
+}
+
+.auth-foot a:hover {
+  text-decoration: underline;
+}
+
+/* a small note line, used for security-related framing */
+.auth-note {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.auth-note svg {
+  width: 13px;
+  height: 13px;
+  color: var(--signal);
+  flex-shrink: 0;
+}
+
+/* ===================== Nav: logged-in state ===================== */
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-user .greet {
+  font-size: 13.5px;
+  color: var(--text-dim);
+}
+
+.nav-user .greet strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.nav-user .btn-logout {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  background: none;
+  cursor: pointer;
+}
+
+.nav-user .btn-logout:hover {
+  color: var(--alert);
+  border-color: var(--alert-dim);
+}
+
+@media (max-width: 760px) {
+  .auth-wrap {
+    padding: 48px 0 40px;
+  }
+  .nav-user .greet {
+    display: none;
+  }
+}

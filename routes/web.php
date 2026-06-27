@@ -1,8 +1,16 @@
 <?php
 require_once __DIR__ .'/../app/Controllers/HomeController.php';
 require_once __DIR__ .'/../app/Controllers/AboutController.php';
-return
-[
-    '/'=> [HomeController::class,'GET','index' ], 
-    '/about'=> [AboutController::class,'GET', 'index' ] 
+require_once __DIR__ .'/../app/Controllers/AuthController.php';
+return [
+    '/' => [
+        'GET' => [HomeController::class, 'index']
+    ],
+    '/about' => [
+        'GET' => [AboutController::class, 'index']
+    ],
+    '/register' => [
+        'GET'  => [AuthController::class, 'index'],  
+        'POST' => [AuthController::class, 'register']
+    ]
 ];
