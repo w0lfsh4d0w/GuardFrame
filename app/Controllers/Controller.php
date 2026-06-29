@@ -2,11 +2,12 @@
 
 class Controller 
 {
-    public function view($viewname ,$data =[])
+    public function view($viewname, $data = [])
     {
-        // this function will extravct them and make them as variables when we need the in the view 
+        $data['csrfToken'] = $_SESSION['csrf_token'] ?? '';
+        
         extract($data);
-        $viewpath = __DIR__.'/../Views/'.$viewname. '.php' ;  
-        require $viewpath ;
+        $viewpath = __DIR__.'/../Views/'.$viewname.'.php';
+        require $viewpath;
     }
 }

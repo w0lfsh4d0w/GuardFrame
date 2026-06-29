@@ -20,4 +20,11 @@ class User extends Model
        
          return $this->pdo->lastInsertId();
     }
+    public function findRole($email)
+    {
+        $query = 'select role from users where email = :email';
+        $stm = $this->pdo->prepare($query);
+        $stm->execute([':email' => $email]);
+        return $stm->fetch();   
+    }
 }

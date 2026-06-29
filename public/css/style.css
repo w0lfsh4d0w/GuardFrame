@@ -779,3 +779,27 @@ button:focus-visible {
     display: none;
   }
 }
+/* Global Alert Box for Login Form */
+.alert-box {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: var(--alert-dim);
+  border: 1px solid var(--alert);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert-box svg {
+  width: 16px;
+  height: 16px;
+  color: var(--alert);
+  flex-shrink: 0;
+}
+
+.alert-box span {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+}

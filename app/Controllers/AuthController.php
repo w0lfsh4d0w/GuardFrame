@@ -6,15 +6,24 @@ class AuthController extends Controller
 
     protected $errors = [];
 
-  public function index()
-{
-    $this->view('register', [
-        'title' => 'Create your account',
-        'activePage' => 'register',
-        'errors' => [],
-        'old' => []
-    ]);
-}
+    public function registerIndex()
+    {
+        $this->view('register', [
+            'title' => 'Create your account',
+            'activePage' => 'register',
+            'errors' => [],
+            'old' => []
+        ]);
+    }
+    public function loginIndex()
+    {
+        $this->view('login', [
+            'title' => 'Login to your account',
+            'activePage' => 'login',
+            'errors' => [],
+            'old' => []
+        ]);
+    }
 
     public function register()
     {
@@ -56,15 +65,92 @@ class AuthController extends Controller
             // show errors to user, do NOT create the user
         } else {
             $newUserid =  $db->createUser($username, $email, password_hash($password, PASSWORD_BCRYPT));
-            $_SESSION['user_id'] = $newUserid;
+            $_SESSION['userid'] = $newUserid;
+            $_SESSION['username'] = $username;
+            $_SESSION['role'] = 'user';
+
             header('Location: /');
             exit;
         }
-
-
-
-        // if the code bass from all we will hash password and create new user 
-
-
     }
+
+    public function login()
+    {
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+        $errors = [];
+
+        if (empty($email) || empty($password)) {
+            $errors['login'] = "Email and password are required";
+        }
+
+        if (empty($errors)) {
+            if (strlen($email) > 255 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors['login'] = "Invalid email or password";
+            }
+
+            if (strlen($password) < 8 || strlen($password) > 50) {
+                $errors['login'] = "Invalid email or password";
+            }
+        }
+
+        if (empty($errors)) {
+            $db = new User();
+            $user = $db->findByEmail($email);
+
+            if (!$user || !password_verify($password, $user['password'])) {
+                $errors['login'] = "Invalid email or password";
+            }
+        }
+
+        if (!empty($errors)) {
+            $this->view('login', [
+                'title' => 'Login',
+                'errors' => $errors,
+                'old' => ['email' => $email],
+                'activePage' => 'login'
+            ]);
+            return;
+        }
+
+        $_SESSION['userid'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
+        header('Location: /');
+        exit;
+    }
+   public function logout()
+{
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        header('Location: /');
+        exit;
+    }
+
+    $postToken = $_POST['csrf_token'] ?? '';
+    $sessionToken = $_SESSION['csrf_token'] ?? '';
+    if (empty($postToken) || !hash_equals($sessionToken, $postToken)) {
+        header('Location: /');
+        exit;
+    }
+
+    $_SESSION = [];
+
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(), 
+            '', 
+            time() - 42000,
+            $params["path"], 
+            $params["domain"],
+            $params["secure"], 
+            $params["httponly"]
+        );
+    }
+
+    session_destroy();
+
+    header('Location: /login');
+    exit;
+}
 }
